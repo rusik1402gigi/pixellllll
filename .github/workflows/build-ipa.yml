@@ -1,0 +1,94 @@
+name: Build iOS IPA (PixelPlayer)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-ipa:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Prepare web assets
+        run: |
+          mkdir -p www
+          cp index.html www/index.html
+
+      - name: Install dependencies & initialize iOS project
+        run: |
+          npm install
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+
+      - name: Configure CocoaPods & disable sandboxing
+        run: |
+          # Встраиваем отключение песочницы внутрь существующего блока post_install
+          node -e "
+          const fs = require('fs');
+          const podfilePath = 'ios/App/Podfile';
+          if (fs.existsSync(podfilePath)) {
+            let content = fs.readFileSync(podfilePath, 'utf8');
+            if (content.includes('assertDeploymentTarget(installer)')) {
+              content = content.replace(
+                'assertDeploymentTarget(installer)',
+                'assertDeploymentTarget(installer)\n    installer.pods_project.targets.each { |t| t.build_configurations.each { |bc| bc.build_settings[\"ENABLE_USER_SCRIPT_SANDBOXING\"] = \"NO\"; bc.build_settings[\"CODE_SIGNING_ALLOWED\"] = \"NO\" } }'
+              );
+              fs.writeFileSync(podfilePath, content);
+              console.log('Successfully updated Podfile');
+            }
+          }
+          "
+          npx cap sync ios
+
+      - name: Enable background audio and document sharing in Info.plist
+        run: |
+          PLIST="ios/App/App/Info.plist"
+          /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes array" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes:0 string audio" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :UIFileSharingEnabled bool true" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :LSSupportsOpeningDocumentsInPlace bool true" "$PLIST" || true
+
+      - name: Build unsigned iOS app with Xcode
+        run: |
+          cd ios/App
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -archivePath build/App.xcarchive \
+            -destination "generic/platform=iOS" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_ENTITLEMENTS="" \
+            DEVELOPMENT_TEAM="" \
+            ENABLE_USER_SCRIPT_SANDBOXING=NO
+
+      - name: Package Payload into IPA
+        run: |
+          mkdir -p Payload
+          cp -r ios/App/build/App.xcarchive/Products/Applications/App.app Payload/PixelPlayer.app
+          zip -qr PixelPlayer.ipa Payload
+          echo "IPA successfully created! File details:"
+          ls -lh PixelPlayer.ipa
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PixelPlayer-iOS-IPA
+          path: PixelPlayer.ipa
+          if-no-files-found: error
