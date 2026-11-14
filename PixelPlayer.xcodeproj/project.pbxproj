@@ -10,20 +10,31 @@
 		BB000000000000000001 /* PixelPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000001 /* PixelPlayerApp.swift */; };
 		BB000000000000000002 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000002 /* Track.swift */; };
 		BB000000000000000003 /* LyricLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000003 /* LyricLine.swift */; };
-		BB000000000000000004 /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000004 /* ColorExtractor.swift */; };
-		BB000000000000000005 /* LrcLyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000005 /* LrcLyricsService.swift */; };
+		BB000000000000000004 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000004 /* Playlist.swift */; };
+		BB000000000000000005 /* PlaybackStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000005 /* PlaybackStats.swift */; };
 		BB000000000000000006 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000006 /* AudioPlayerManager.swift */; };
-		BB000000000000000007 /* MusicLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000007 /* MusicLibraryManager.swift */; };
-		BB000000000000000008 /* WavyProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000008 /* WavyProgressSlider.swift */; };
-		BB000000000000000009 /* FullPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000009 /* FullPlayerView.swift */; };
-		BB00000000000000000A /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000A /* MiniPlayerView.swift */; };
-		BB00000000000000000B /* LyricsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000B /* LyricsSheetView.swift */; };
-		BB00000000000000000C /* QueueSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000C /* QueueSheetView.swift */; };
-		BB00000000000000000D /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000D /* LibraryView.swift */; };
-		BB00000000000000000E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000E /* SettingsView.swift */; };
-		BB00000000000000000F /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000F /* MainTabView.swift */; };
-		BB000000000000000010 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000010 /* DocumentPicker.swift */; };
-		BB000000000000000012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000000000000000012 /* Assets.xcassets */; };
+		BB000000000000000007 /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000007 /* ColorExtractor.swift */; };
+		BB000000000000000008 /* EqualizerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000008 /* EqualizerManager.swift */; };
+		BB000000000000000009 /* LrcLyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000009 /* LrcLyricsService.swift */; };
+		BB00000000000000000A /* MusicLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000A /* MusicLibraryManager.swift */; };
+		BB00000000000000000B /* PlaylistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000B /* PlaylistManager.swift */; };
+		BB00000000000000000C /* SleepTimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000C /* SleepTimerManager.swift */; };
+		BB00000000000000000D /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000D /* StatsManager.swift */; };
+		BB00000000000000000E /* FullPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000E /* FullPlayerView.swift */; };
+		BB00000000000000000F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000F /* MiniPlayerView.swift */; };
+		BB000000000000000010 /* WavyProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000010 /* WavyProgressSlider.swift */; };
+		BB000000000000000011 /* LyricsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000011 /* LyricsSheetView.swift */; };
+		BB000000000000000012 /* EqualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000012 /* EqualizerView.swift */; };
+		BB000000000000000013 /* SleepTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000013 /* SleepTimerSheet.swift */; };
+		BB000000000000000014 /* PlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000014 /* PlaylistsView.swift */; };
+		BB000000000000000015 /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000015 /* PlaylistDetailView.swift */; };
+		BB000000000000000016 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000016 /* StatsView.swift */; };
+		BB000000000000000017 /* QueueSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000017 /* QueueSheetView.swift */; };
+		BB000000000000000018 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000018 /* LibraryView.swift */; };
+		BB000000000000000019 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000019 /* SettingsView.swift */; };
+		BB00000000000000001A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000001A /* MainTabView.swift */; };
+		BB00000000000000001B /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000001B /* DocumentPicker.swift */; };
+		BB00000000000000001D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA00000000000000001D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,21 +42,32 @@
 		AA000000000000000001 /* PixelPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/App/PixelPlayerApp.swift"; sourceTree = "<group>"; };
 		AA000000000000000002 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Models/Track.swift"; sourceTree = "<group>"; };
 		AA000000000000000003 /* LyricLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Models/LyricLine.swift"; sourceTree = "<group>"; };
-		AA000000000000000004 /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/ColorExtractor.swift"; sourceTree = "<group>"; };
-		AA000000000000000005 /* LrcLyricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/LrcLyricsService.swift"; sourceTree = "<group>"; };
+		AA000000000000000004 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Models/Playlist.swift"; sourceTree = "<group>"; };
+		AA000000000000000005 /* PlaybackStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Models/PlaybackStats.swift"; sourceTree = "<group>"; };
 		AA000000000000000006 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/AudioPlayerManager.swift"; sourceTree = "<group>"; };
-		AA000000000000000007 /* MusicLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/MusicLibraryManager.swift"; sourceTree = "<group>"; };
-		AA000000000000000008 /* WavyProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/WavyProgressSlider.swift"; sourceTree = "<group>"; };
-		AA000000000000000009 /* FullPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/FullPlayerView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000A /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/MiniPlayerView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000B /* LyricsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Lyrics/LyricsSheetView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000C /* QueueSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Queue/QueueSheetView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000D /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Library/LibraryView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Settings/SettingsView.swift"; sourceTree = "<group>"; };
-		AA00000000000000000F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Main/MainTabView.swift"; sourceTree = "<group>"; };
-		AA000000000000000010 /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Common/DocumentPicker.swift"; sourceTree = "<group>"; };
-		AA000000000000000011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PixelPlayer/Resources/Info.plist"; sourceTree = "<group>"; };
-		AA000000000000000012 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "PixelPlayer/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		AA000000000000000007 /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/ColorExtractor.swift"; sourceTree = "<group>"; };
+		AA000000000000000008 /* EqualizerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/EqualizerManager.swift"; sourceTree = "<group>"; };
+		AA000000000000000009 /* LrcLyricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/LrcLyricsService.swift"; sourceTree = "<group>"; };
+		AA00000000000000000A /* MusicLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/MusicLibraryManager.swift"; sourceTree = "<group>"; };
+		AA00000000000000000B /* PlaylistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/PlaylistManager.swift"; sourceTree = "<group>"; };
+		AA00000000000000000C /* SleepTimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/SleepTimerManager.swift"; sourceTree = "<group>"; };
+		AA00000000000000000D /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Services/StatsManager.swift"; sourceTree = "<group>"; };
+		AA00000000000000000E /* FullPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/FullPlayerView.swift"; sourceTree = "<group>"; };
+		AA00000000000000000F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/MiniPlayerView.swift"; sourceTree = "<group>"; };
+		AA000000000000000010 /* WavyProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Player/WavyProgressSlider.swift"; sourceTree = "<group>"; };
+		AA000000000000000011 /* LyricsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Lyrics/LyricsSheetView.swift"; sourceTree = "<group>"; };
+		AA000000000000000012 /* EqualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Equalizer/EqualizerView.swift"; sourceTree = "<group>"; };
+		AA000000000000000013 /* SleepTimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Timer/SleepTimerSheet.swift"; sourceTree = "<group>"; };
+		AA000000000000000014 /* PlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Playlists/PlaylistsView.swift"; sourceTree = "<group>"; };
+		AA000000000000000015 /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Playlists/PlaylistDetailView.swift"; sourceTree = "<group>"; };
+		AA000000000000000016 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Stats/StatsView.swift"; sourceTree = "<group>"; };
+		AA000000000000000017 /* QueueSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Queue/QueueSheetView.swift"; sourceTree = "<group>"; };
+		AA000000000000000018 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Library/LibraryView.swift"; sourceTree = "<group>"; };
+		AA000000000000000019 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Settings/SettingsView.swift"; sourceTree = "<group>"; };
+		AA00000000000000001A /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Main/MainTabView.swift"; sourceTree = "<group>"; };
+		AA00000000000000001B /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PixelPlayer/Views/Common/DocumentPicker.swift"; sourceTree = "<group>"; };
+		AA00000000000000001C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PixelPlayer/Resources/Info.plist"; sourceTree = "<group>"; };
+		AA00000000000000001D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "PixelPlayer/Resources/Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,21 +87,32 @@
 				AA000000000000000001 /* PixelPlayerApp.swift */,
 				AA000000000000000002 /* Track.swift */,
 				AA000000000000000003 /* LyricLine.swift */,
-				AA000000000000000004 /* ColorExtractor.swift */,
-				AA000000000000000005 /* LrcLyricsService.swift */,
+				AA000000000000000004 /* Playlist.swift */,
+				AA000000000000000005 /* PlaybackStats.swift */,
 				AA000000000000000006 /* AudioPlayerManager.swift */,
-				AA000000000000000007 /* MusicLibraryManager.swift */,
-				AA000000000000000008 /* WavyProgressSlider.swift */,
-				AA000000000000000009 /* FullPlayerView.swift */,
-				AA00000000000000000A /* MiniPlayerView.swift */,
-				AA00000000000000000B /* LyricsSheetView.swift */,
-				AA00000000000000000C /* QueueSheetView.swift */,
-				AA00000000000000000D /* LibraryView.swift */,
-				AA00000000000000000E /* SettingsView.swift */,
-				AA00000000000000000F /* MainTabView.swift */,
-				AA000000000000000010 /* DocumentPicker.swift */,
-				AA000000000000000011 /* Info.plist */,
-				AA000000000000000012 /* Assets.xcassets */,
+				AA000000000000000007 /* ColorExtractor.swift */,
+				AA000000000000000008 /* EqualizerManager.swift */,
+				AA000000000000000009 /* LrcLyricsService.swift */,
+				AA00000000000000000A /* MusicLibraryManager.swift */,
+				AA00000000000000000B /* PlaylistManager.swift */,
+				AA00000000000000000C /* SleepTimerManager.swift */,
+				AA00000000000000000D /* StatsManager.swift */,
+				AA00000000000000000E /* FullPlayerView.swift */,
+				AA00000000000000000F /* MiniPlayerView.swift */,
+				AA000000000000000010 /* WavyProgressSlider.swift */,
+				AA000000000000000011 /* LyricsSheetView.swift */,
+				AA000000000000000012 /* EqualizerView.swift */,
+				AA000000000000000013 /* SleepTimerSheet.swift */,
+				AA000000000000000014 /* PlaylistsView.swift */,
+				AA000000000000000015 /* PlaylistDetailView.swift */,
+				AA000000000000000016 /* StatsView.swift */,
+				AA000000000000000017 /* QueueSheetView.swift */,
+				AA000000000000000018 /* LibraryView.swift */,
+				AA000000000000000019 /* SettingsView.swift */,
+				AA00000000000000001A /* MainTabView.swift */,
+				AA00000000000000001B /* DocumentPicker.swift */,
+				AA00000000000000001C /* Info.plist */,
+				AA00000000000000001D /* Assets.xcassets */,
 				FF000000000000000002 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,7 +182,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB000000000000000012 /* Assets.xcassets in Resources */,
+				BB00000000000000001D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,19 +196,30 @@
 				BB000000000000000001 /* PixelPlayerApp.swift in Sources */,
 				BB000000000000000002 /* Track.swift in Sources */,
 				BB000000000000000003 /* LyricLine.swift in Sources */,
-				BB000000000000000004 /* ColorExtractor.swift in Sources */,
-				BB000000000000000005 /* LrcLyricsService.swift in Sources */,
+				BB000000000000000004 /* Playlist.swift in Sources */,
+				BB000000000000000005 /* PlaybackStats.swift in Sources */,
 				BB000000000000000006 /* AudioPlayerManager.swift in Sources */,
-				BB000000000000000007 /* MusicLibraryManager.swift in Sources */,
-				BB000000000000000008 /* WavyProgressSlider.swift in Sources */,
-				BB000000000000000009 /* FullPlayerView.swift in Sources */,
-				BB00000000000000000A /* MiniPlayerView.swift in Sources */,
-				BB00000000000000000B /* LyricsSheetView.swift in Sources */,
-				BB00000000000000000C /* QueueSheetView.swift in Sources */,
-				BB00000000000000000D /* LibraryView.swift in Sources */,
-				BB00000000000000000E /* SettingsView.swift in Sources */,
-				BB00000000000000000F /* MainTabView.swift in Sources */,
-				BB000000000000000010 /* DocumentPicker.swift in Sources */,
+				BB000000000000000007 /* ColorExtractor.swift in Sources */,
+				BB000000000000000008 /* EqualizerManager.swift in Sources */,
+				BB000000000000000009 /* LrcLyricsService.swift in Sources */,
+				BB00000000000000000A /* MusicLibraryManager.swift in Sources */,
+				BB00000000000000000B /* PlaylistManager.swift in Sources */,
+				BB00000000000000000C /* SleepTimerManager.swift in Sources */,
+				BB00000000000000000D /* StatsManager.swift in Sources */,
+				BB00000000000000000E /* FullPlayerView.swift in Sources */,
+				BB00000000000000000F /* MiniPlayerView.swift in Sources */,
+				BB000000000000000010 /* WavyProgressSlider.swift in Sources */,
+				BB000000000000000011 /* LyricsSheetView.swift in Sources */,
+				BB000000000000000012 /* EqualizerView.swift in Sources */,
+				BB000000000000000013 /* SleepTimerSheet.swift in Sources */,
+				BB000000000000000014 /* PlaylistsView.swift in Sources */,
+				BB000000000000000015 /* PlaylistDetailView.swift in Sources */,
+				BB000000000000000016 /* StatsView.swift in Sources */,
+				BB000000000000000017 /* QueueSheetView.swift in Sources */,
+				BB000000000000000018 /* LibraryView.swift in Sources */,
+				BB000000000000000019 /* SettingsView.swift in Sources */,
+				BB00000000000000001A /* MainTabView.swift in Sources */,
+				BB00000000000000001B /* DocumentPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
