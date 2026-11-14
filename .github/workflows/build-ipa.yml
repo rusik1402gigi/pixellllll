@@ -1,0 +1,49 @@
+name: Build PixelPlayer iOS IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    name: Build & Package IPA
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Check Xcode Version
+        run: |
+          xcodebuild -version
+
+      - name: Build Xcode Archive
+        run: |
+          xcodebuild clean archive \
+            -project PixelPlayer.xcodeproj \
+            -scheme PixelPlayer \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/PixelPlayer.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package Payload into IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/PixelPlayer.xcarchive/Products/Applications/PixelPlayer.app Payload/
+          zip -qr PixelPlayer.ipa Payload
+          echo "IPA created successfully! File size:"
+          ls -lh PixelPlayer.ipa
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PixelPlayer-iOS-IPA
+          path: PixelPlayer.ipa
+          retention-days: 14
