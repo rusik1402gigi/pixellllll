@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="glass" data-dark="true">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Pixel Player" />
+  <meta name="theme-color" content="#0d1117" id="metaThemeColor" />
+  <title>Pixel Player iOS</title>
+  <style>
+    :root {
+      --hue: 165;
+      --sat: 55%;
+      --light: 50%;
+      --accent: hsl(var(--hue), var(--sat), var(--light));
+      --accent-rgb: 56, 178, 142;
+      --accent-soft: rgba(var(--accent-rgb), 0.18);
+      --accent-glow: rgba(var(--accent-rgb), 0.38);
+      --accent-contrast: #ffffff;
+
+      --bg: #090d0e;
+      --bg-secondary: rgba(18, 24, 26, 0.94);
+      --surface: rgba(255, 255, 255, 0.1);
+      --surface-elevated: rgba(255, 255, 255, 0.16);
+      --border: rgba(255, 255, 255, 0.14);
+      --border-highlight: rgba(255, 255, 255, 0.28);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.65);
+      --radius-card: 28px;
+      --radius-btn: 16px;
+      --radius-art: 30px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      --lyrics-font-size: 18px;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    /* ==================== 1. ТЕМА: ЖИДКОЕ СТЕКЛО (LIQUID GLASS — ФОТО 1) ==================== */
+    html[data-theme="glass"][data-dark="true"] {
+      --bg: #080d0d;
+      --bg-secondary: #101718;
+      --surface: rgba(255, 255, 255, 0.12);
+      --surface-elevated: rgba(255, 255, 255, 0.18);
+      --border: rgba(255, 255, 255, 0.15);
+      --border-highlight: rgba(255, 255, 255, 0.32);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.66);
+      --accent: hsl(var(--hue), 72%, 62%);
+      --accent-contrast: #070d0c;
+    }
+    html[data-theme="glass"][data-dark="false"] {
+      --bg: #e2ece8;
+      --bg-secondary: #ffffff;
+      --surface: rgba(255, 255, 255, 0.65);
+      --surface-elevated: rgba(255, 255, 255, 0.88);
+      --border: rgba(0, 0, 0, 0.08);
+      --border-highlight: rgba(255, 255, 255, 0.9);
+      --text: #0e1b17;
+      --text-muted: #566862;
+      --accent: hsl(var(--hue), 65%, 40%);
+      --accent-contrast: #ffffff;
+    }
+
+    /* ==================== 2. ТЕМА: GOOGLE PIXEL (MATERIAL YOU — ФОТО 2) ==================== */
+    html[data-theme="pixel"][data-dark="true"] {
+      --bg: hsl(var(--hue), 24%, 12%);
+      --bg-secondary: hsl(var(--hue), 22%, 18%);
+      --surface: hsl(var(--hue), 24%, 22%);
+      --surface-elevated: hsl(var(--hue), 26%, 28%);
+      --border: hsla(var(--hue), 30%, 80%, 0.12);
+      --border-highlight: hsla(var(--hue), 30%, 80%, 0.24);
+      --text: hsl(var(--hue), 35%, 96%);
+      --text-muted: hsl(var(--hue), 22%, 72%);
+      --accent: hsl(var(--hue), 75%, 78%);
+      --accent-contrast: hsl(var(--hue), 40%, 12%);
+      --radius-card: 26px;
+      --radius-btn: 999px;
+      --radius-art: 28px;
+    }
+    html[data-theme="pixel"][data-dark="false"] {
+      --bg: hsl(var(--hue), 35%, 94%);
+      --bg-secondary: hsl(var(--hue), 30%, 88%);
+      --surface: hsl(var(--hue), 32%, 84%);
+      --surface-elevated: hsl(var(--hue), 35%, 80%);
+      --border: hsla(var(--hue), 30%, 20%, 0.1);
+      --border-highlight: hsla(var(--hue), 30%, 20%, 0.2);
+      --text: hsl(var(--hue), 35%, 14%);
+      --text-muted: hsl(var(--hue), 22%, 38%);
+      --accent: hsl(var(--hue), 65%, 42%);
+      --accent-contrast: #ffffff;
+      --radius-card: 26px;
+      --radius-btn: 999px;
+      --radius-art: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+    input, textarea { user-select: text; -webkit-user-select: text; }
+
+    html, body {
+      width: 100%; height: 100dvh; overflow: hidden;
+      background-color: var(--bg); color: var(--text); font-family: var(--font-sans);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* Адаптивная центровка (iPad / Mac / ПК) */
+    @media (min-width: 600px) {
+      body {
+        display: flex;
+        justify-content: center;
+        background: #020404;
+      }
+      .app-viewport {
+        max-width: 440px;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
+      .bottom-sheet {
+        max-width: 440px !important;
+      }
+    }
+
+    .app-viewport {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+      padding-left: var(--safe-left);
+      padding-right: var(--safe-right);
+      z-index: 1;
+    }
+
+    /* Фоновый динамический живой блюр (как на Фото 1) */
+    .ambient-backdrop {
+      position: absolute;
+      inset: -20px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(50px) brightness(0.48) saturate(1.4);
+      transform: scale(1.18);
+      z-index: 0;
+      pointer-events: none;
+      transition: background-image 0.6s ease;
+    }
+    html[data-dark="false"] .ambient-backdrop {
+      filter: blur(55px) brightness(0.92) saturate(1.2);
+      opacity: 0.55;
+    }
+    .ambient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.65) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    html[data-dark="false"] .ambient-overlay {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.7) 100%);
+    }
+
+    /* Верхняя панель (Фото 1: стрелочка вниз, Моя волна, иконки трансляции/истории) */
+    .top-bar {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px 4px;
+    }
+    .top-btn {
+      width: 42px; height: 42px; border-radius: 50%; border: none;
+      background: transparent; color: var(--text);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s;
+    }
+    .top-btn:active { transform: scale(0.92); background: var(--surface); }
+    .top-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-align: center;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 1px;
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Карусель обложек с эффектом выглядывающих соседних треков (Фото 1) */
+    .carousel-stage {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      touch-action: pan-y;
+      margin: 4px 0;
+    }
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover-card {
+      position: absolute;
+      width: min(72vw, 305px);
+      aspect-ratio: 1;
+      border-radius: var(--radius-art);
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+      transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease, filter 0.32s ease;
+      background: var(--surface-elevated);
+      user-select: none;
+    }
+    .cover-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none;
+    }
+    .cover-card.center {
+      z-index: 5;
+      transform: translateX(0) scale(1);
+      opacity: 1;
+      filter: blur(0px);
+    }
+    .cover-card.center.swiping {
+      transition: none;
+    }
+    .cover-card.prev {
+      z-index: 2;
+      transform: translateX(-88%) scale(0.85);
+      opacity: 0.55;
+      filter: blur(2px);
+      cursor: pointer;
+    }
+    .cover-card.next {
+      z-index: 2;
+      transform: translateX(88%) scale(0.85);
+      opacity: 0.55;
+      filter: blur(2px);
+      cursor: pointer;
+    }
+
+    /* Строка информации о треке (Фото 1: Капсула с аватаром + Share + More) */
+    .meta-bar {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .track-info-pill {
+      flex: 1;
+      min-width: 0;
+      height: 52px;
+      background: var(--surface);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px 0 7px;
+      cursor: pointer;
+      transition: transform 0.16s ease, background-color 0.2s;
+    }
+    .track-info-pill:active { transform: scale(0.98); background: var(--surface-elevated); }
+    .pill-avatar {
+      width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+      background: var(--surface-elevated);
+    }
+    .pill-titles { flex: 1; min-width: 0; }
+    .pill-name {
+      font-size: 15.5px; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pill-artist {
+      font-size: 12.5px; color: var(--text-muted); font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px;
+    }
+    .circle-icon-btn {
+      width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--surface); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      color: var(--text); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0; transition: transform 0.16s ease;
+    }
+    .circle-icon-btn:active { transform: scale(0.92); background: var(--surface-elevated); }
+
+    /* Скруббер (Фото 1: толстая плавная капсула; Фото 2: волнистая линия Pixel) */
+    .scrubber-zone {
+      position: relative;
+      z-index: 10;
+      padding: 0 20px;
+      margin-bottom: 8px;
+    }
+    .scrubber-track-box {
+      position: relative;
+      width: 100%;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    /* Стиль скруббера Жидкое стекло (Фото 1) */
+    .glass-scrubber-bg {
+      position: absolute;
+      left: 0; right: 0; height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+    }
+    html[data-dark="false"] .glass-scrubber-bg { background: rgba(0, 0, 0, 0.12); }
+    .glass-scrubber-fill {
+      height: 100%;
+      width: 0%;
+      background: #ffffff;
+      border-radius: 999px;
+    }
+    html[data-dark="false"] .glass-scrubber-fill { background: var(--accent); }
+    .glass-scrubber-thumb {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 0%;
+      width: 12px;
+      height: 20px;
+      border-radius: 6px;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+    }
+    html[data-dark="false"] .glass-scrubber-thumb { background: #111e1a; }
+
+    /* Волнистый скруббер Google Pixel (Фото 2) */
+    .pixel-wave-canvas {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      width: 100%; height: 100%;
+      display: none;
+      pointer-events: none;
+    }
+    html[data-theme="pixel"] .glass-scrubber-bg,
+    html[data-theme="pixel"] .glass-scrubber-thumb { display: none; }
+    html[data-theme="pixel"] .pixel-wave-canvas { display: block; }
+
+    .real-seek-range {
+      position: absolute;
+      inset: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: pointer; z-index: 5;
+    }
+    .time-labels-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: -2px;
+    }
+    .time-tap { cursor: pointer; padding: 2px 4px; }
+
+    /* Панель управления воспроизведением (Фото 1: Mute, Prev, Big Play, Next, Like) */
+    .controls-zone {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 18px 12px;
+    }
+    .ctrl-icon-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: none;
+      background: transparent; color: var(--text);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: transform 0.16s ease;
+    }
+    .ctrl-icon-btn:active { transform: scale(0.9); }
+    .ctrl-icon-btn.liked { color: #ff3b6b; }
+
+    /* Центральная большая кнопка воспроизведения (Фото 1) */
+    .main-circle-play {
+      width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--border-highlight);
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      color: #ffffff; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.16s ease, background-color 0.2s;
+    }
+    html[data-dark="false"] .main-circle-play { background: #111e1a; color: #ffffff; }
+    .main-circle-play:active { transform: scale(0.92); }
+
+    /* Блок кнопок для темы Google Pixel (Фото 2: капсульные контейнеры) */
+    html[data-theme="pixel"] .controls-zone {
+      background: var(--surface);
+      border-radius: 36px;
+      padding: 10px 16px;
+      margin: 0 16px 10px;
+    }
+    html[data-theme="pixel"] .main-circle-play {
+      border-radius: 26px;
+      width: 68px; height: 56px;
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+
+    /* Нижний парящий док быстрого доступа (Фото 1: Режимы, Эквалайзер, Текст, Таймер) */
+    .floating-dock {
+      position: relative;
+      z-index: 10;
+      margin: 0 18px 6px;
+      height: 60px;
+      border-radius: 26px;
+      background: var(--surface);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 10px;
+    }
+    .dock-action-btn {
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: transparent; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      position: relative; transition: color 0.2s, transform 0.16s;
+    }
+    .dock-action-btn.active, .dock-action-btn:active {
+      color: var(--text); transform: scale(0.92);
+    }
+    .dock-badge-dot {
+      position: absolute; top: 9px; right: 9px; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); display: none;
+    }
+    .dock-badge-dot.active { display: block; }
+
+    /* ==================== ШТОРКИ (BOTTOM SHEETS) ==================== */
+    .sheet-backdrop {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 80; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    .bottom-sheet {
+      width: 100%; max-width: 520px; max-height: 88dvh; overflow-y: auto;
+      background: var(--bg-secondary); border-top: 1px solid var(--border-highlight);
+      border-radius: 28px 28px 0 0; padding: 12px 20px calc(24px + var(--safe-bottom));
+      transform: translateY(100%); transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    }
+    .sheet-backdrop.open .bottom-sheet { transform: translateY(0); }
+    .sheet-handle { width: 38px; height: 4px; border-radius: 99px; background: var(--text-muted); opacity: 0.35; margin: 0 auto 14px; }
+    .sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .sheet-title { font-size: 19px; font-weight: 700; color: var(--text); }
+    .sheet-close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--surface); color: var(--text); cursor: pointer; }
+
+    /* Стили элементов внутри шторок */
+    .chips-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; }
+    .chips-row::-webkit-scrollbar { display: none; }
+    .chip {
+      padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-muted); font-size: 12.5px; font-weight: 600;
+      white-space: nowrap; cursor: pointer; flex-shrink: 0;
+    }
+    .chip.active { background: var(--accent); color: var(--accent-contrast); border-color: transparent; }
+
+    .track-row {
+      display: flex; align-items: center; gap: 12px; padding: 7px 4px;
+      border-radius: 14px; cursor: pointer;
+    }
+    .track-row:active { background: var(--surface); }
+    .track-thumb { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: var(--surface); }
+    .track-info-col { flex: 1; min-width: 0; }
+    .track-name-lbl { font-size: 14.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .track-row.playing .track-name-lbl { color: var(--accent); }
+    .track-sub-lbl { font-size: 12px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .action-btn-row {
+      display: flex; align-items: center; gap: 12px; padding: 13px 14px;
+      border-radius: 16px; border: none; background: var(--surface);
+      color: var(--text); font-size: 14.5px; font-weight: 500; text-align: left; cursor: pointer; width: 100%; margin-bottom: 6px;
+    }
+    .action-btn-row.danger { color: #ff5c6c; }
+
+    .pill-cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 18px; border-radius: 999px; border: none;
+      background: var(--accent); color: var(--accent-contrast);
+      font-size: 13.5px; font-weight: 600; cursor: pointer;
+    }
+
+    /* Текст LRC караоке */
+    .lyrics-view { height: 55vh; overflow-y: auto; padding: 10px 4px; scroll-behavior: smooth; }
+    .lyrics-view::-webkit-scrollbar { display: none; }
+    .lyric-line {
+      font-size: var(--lyrics-font-size); font-weight: 700; line-height: 1.5;
+      color: var(--text-muted); opacity: 0.45; margin-bottom: 16px; cursor: pointer; transition: color 0.25s, opacity 0.25s, transform 0.25s;
+    }
+    .lyric-line.active { color: var(--text); opacity: 1; transform: scale(1.02); }
+    .lyric-line.plain { opacity: 0.9; color: var(--text); font-size: calc(var(--lyrics-font-size) - 2px); font-weight: 500; cursor: default; }
+
+    /* Эквалайзер */
+    .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: center; margin-top: 10px; }
+    .eq-col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .eq-range-wrap { height: 96px; display: flex; align-items: center; justify-content: center; }
+    .eq-range {
+      -webkit-appearance: none; appearance: none; width: 88px; height: 5px;
+      background: rgba(140, 140, 160, 0.28); border-radius: 99px; transform: rotate(-90deg); outline: none;
+    }
+    .eq-range::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent);
+    }
+
+    .form-group { margin-bottom: 12px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 11px 14px; border-radius: 14px;
+      border: 1px solid var(--border-highlight); background: var(--surface);
+      color: var(--text); font-size: 15px; font-family: inherit; outline: none;
+    }
+    .form-textarea { min-height: 140px; resize: vertical; line-height: 1.45; }
+
+    .ios-switch { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
+    .ios-switch input { opacity: 0; width: 0; height: 0; }
+    .ios-slider { position: absolute; inset: 0; background: rgba(128, 128, 145, 0.32); border-radius: 999px; transition: 0.25s; cursor: pointer; }
+    .ios-slider::before { content: ""; position: absolute; width: 22px; height: 22px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.25s; }
+    .ios-switch input:checked + .ios-slider { background: var(--accent); }
+    .ios-switch input:checked + .ios-slider::before { transform: translateX(20px); }
+
+    .toast {
+      position: fixed; top: calc(14px + var(--safe-top)); left: 50%;
+      transform: translateX(-50%) translateY(-140%);
+      background: var(--bg-secondary); color: var(--text);
+      border: 1px solid var(--border-highlight); padding: 10px 20px;
+      border-radius: 999px; font-size: 13.5px; font-weight: 600;
+      z-index: 120; transition: transform 0.3s ease; white-space: nowrap; pointer-events: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .hidden-input { display: none; }
+
+    .drag-overlay {
+      position: fixed; inset: 0; z-index: 150;
+      background: rgba(8, 12, 12, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 3px dashed var(--accent); border-radius: 24px; margin: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .drag-overlay.active { opacity: 1; pointer-events: auto; }
+  </style>
+</head>
+<body>
+  <!-- Размытая подложка под цвет обложки (Фото 1) -->
+  <div class="ambient-backdrop" id="ambientBackdrop"></div>
+  <div class="ambient-overlay"></div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Оверлей перетаскивания файлов -->
+  <div class="drag-overlay" id="dragOverlay">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--accent)">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="17 8 12 3 7 8"></polyline>
+      <line x1="12" y1="3" x2="12" y2="15"></line>
+    </svg>
+    <div style="font-size:18px; font-weight:700;">Отпустите файлы для импорта</div>
+    <div style="font-size:13px; color:var(--text-muted);">MP3, FLAC, M4A, WAV сохранятся в медиатеку</div>
+  </div>
+
+  <div class="app-viewport">
+    <!-- ==================== ВЕРХНИЙ БАР (ФОТО 1) ==================== -->
+    <header class="top-bar">
+      <button class="top-btn" id="btnOpenLibrary" aria-label="Медиатека" title="Открыть медиатеку">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
+      <div class="top-title">
+        <span id="topHeaderLabel">Моя волна</span>
+        <span class="top-subtitle" id="topThemeModeLabel">Lumi Ultra</span>
+      </div>
+
+      <div class="top-actions">
+        <button class="top-btn" id="btnTopSearch" aria-label="Поиск" title="Поиск треков">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="top-btn" id="btnTopQueue" aria-label="Очередь" title="Очередь воспроизведения">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polyline points="12 7 12 12 15 15"></polyline>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== КАРУСЕЛЬ ОБЛОЖЕК (ФОТО 1) ==================== -->
+    <main class="carousel-stage" id="carouselStage">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Предыдущий трек (выглядывает слева) -->
+        <div class="cover-card prev" id="cardPrev">
+          <img id="imgCoverPrev" src="" alt="" />
+        </div>
+        <!-- Текущий трек (по центру) -->
+        <div class="cover-card center" id="cardCenter">
+          <img id="imgCoverCenter" src="" alt="Обложка" />
+        </div>
+        <!-- Следующий трек (выглядывает справа) -->
+        <div class="cover-card next" id="cardNext">
+          <img id="imgCoverNext" src="" alt="" />
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== СТРОКА ТРЕКА: КАПСУЛА + SHARE + MORE (ФОТО 1) ==================== -->
+    <section class="meta-bar">
+      <div class="track-info-pill" id="btnTrackInfoPill" title="Текст песни и информация">
+        <img class="pill-avatar" id="pillAvatar" src="" alt="" />
+        <div class="pill-titles">
+          <div class="pill-name" id="pillTrackName">Нет трека</div>
+          <div class="pill-artist" id="pillArtistName">Загрузите музыку</div>
+        </div>
+      </div>
+
+      <button class="circle-icon-btn" id="btnShareTrack" aria-label="Поделиться">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+          <polyline points="16 6 12 2 8 6"></polyline>
+          <line x1="12" y1="2" x2="12" y2="15"></line>
+        </svg>
+      </button>
+
+      <button class="circle-icon-btn" id="btnMoreTrack" aria-label="Меню трека">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="5" r="2"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+          <circle cx="12" cy="19" r="2"></circle>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ==================== СКРУББЕР И ВРЕМЯ (ФОТО 1 / ФОТО 2) ==================== -->
+    <section class="scrubber-zone">
+      <div class="scrubber-track-box" id="scrubberTrackBox">
+        <!-- Скруббер Liquid Glass (Фото 1) -->
+        <div class="glass-scrubber-bg">
+          <div class="glass-scrubber-fill" id="glassScrubberFill"></div>
+        </div>
+        <div class="glass-scrubber-thumb" id="glassScrubberThumb"></div>
+
+        <!-- Скруббер Google Pixel волнистая линия (Фото 2) -->
+        <canvas class="pixel-wave-canvas" id="pixelWaveCanvas"></canvas>
+
+        <input type="range" class="real-seek-range" id="seekSlider" min="0" max="1000" value="0" />
+      </div>
+
+      <div class="time-labels-row">
+        <span id="timeElapsed">0:00</span>
+        <span class="time-tap" id="timeTotal" title="Нажмите для смены (Всего / Осталось)">0:00</span>
+      </div>
+    </section>
+
+    <!-- ==================== ПАНЕЛЬ ВОСПРОИЗВЕДЕНИЯ (ФОТО 1) ==================== -->
+    <section class="controls-zone">
+      <button class="ctrl-icon-btn" id="btnMuteToggle" aria-label="Звук">
+        <svg id="muteIconSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      </button>
+
+      <button class="ctrl-icon-btn" id="btnPrevTrack" aria-label="Предыдущий">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="4" y="4" width="2.8" height="16" rx="1"></rect>
+          <polygon points="20 4 9 12 20 20 20 4"></polygon>
+        </svg>
+      </button>
+
+      <button class="main-circle-play" id="btnMainPlay" aria-label="Воспроизведение">
+        <svg id="playIconSvg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="7 4 20 12 7 20 7 4"></polygon>
+        </svg>
+      </button>
+
+      <button class="ctrl-icon-btn" id="btnNextTrack" aria-label="Следующий">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="4 4 15 12 4 20 4 4"></polygon>
+          <rect x="17.2" y="4" width="2.8" height="16" rx="1"></rect>
+        </svg>
+      </button>
+
+      <button class="ctrl-icon-btn" id="btnFavTrack" aria-label="В любимое">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ==================== ПАРЯЩИЙ ДОК БЫСТРОГО ДОСТУПА (ФОТО 1) ==================== -->
+    <nav class="floating-dock">
+      <button class="dock-action-btn" id="btnDockFlowMode" aria-label="Режим потока" title="Перемешать / Повтор">
+        <svg id="dockFlowIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <polyline points="16 3 21 3 21 8"></polyline>
+          <line x1="4" y1="20" x2="21" y2="3"></line>
+          <polyline points="21 16 21 21 16 21"></polyline>
+          <line x1="15" y1="15" x2="21" y2="21"></line>
+          <line x1="4" y1="4" x2="9" y2="9"></line>
+        </svg>
+      </button>
+
+      <button class="dock-action-btn" id="btnDockFx" aria-label="Звук и эквалайзер" title="Эквалайзер и звуковые режимы">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="4" y1="7" x2="20" y2="7"></line>
+          <circle cx="8" cy="7" r="2.5" fill="currentColor"></circle>
+          <line x1="4" y1="17" x2="20" y2="17"></line>
+          <circle cx="16" cy="17" r="2.5" fill="currentColor"></circle>
+        </svg>
+      </button>
+
+      <button class="dock-action-btn" id="btnDockLyrics" aria-label="Текст караоке" title="Текст песни (LRC)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 6h16M4 12h10M4 18h14"></path>
+        </svg>
+      </button>
+
+      <button class="dock-action-btn" id="btnDockSleep" aria-label="Таймер сна" title="Таймер сна">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <circle cx="12" cy="13" r="8"></circle>
+          <polyline points="12 9 12 13 14.5 15.5"></polyline>
+          <line x1="12" y1="2" x2="12" y2="5"></line>
+        </svg>
+        <span class="dock-badge-dot" id="dockSleepDot"></span>
+      </button>
+    </nav>
+  </div>
+
+  <input type="file" id="audioFileInput" class="hidden-input" accept="audio/*,.mp3,.flac,.m4a,.wav,.ogg,.aac" multiple />
+  <input type="file" id="coverFileInput" class="hidden-input" accept="image/*" />
+  <input type="file" id="backupRestoreInput" class="hidden-input" accept=".json,application/json" />
+
+  <!-- ==================== ШТОРКА МЕДИАТЕКИ ==================== -->
+  <div class="sheet-backdrop" id="librarySheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Моя медиатека</span>
+        <div style="display:flex; gap:6px;">
+          <button class="sheet-close-btn" id="btnOpenSettingsFromLib" title="Настройки">⚙️</button>
+          <button class="sheet-close-btn" data-close-sheet="librarySheet">✕</button>
+        </div>
+      </div>
+
+      <div class="chips-row">
+        <button class="chip active" data-lib-tab="all">Все треки</button>
+        <button class="chip" data-lib-tab="favorites">Любимое</button>
+        <button class="chip" data-lib-tab="playlists">Плейлисты</button>
+        <button class="chip" data-lib-tab="recent">Недавние</button>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <button class="pill-cta" id="btnLibImport" style="flex:1;">+ Загрузить музыку</button>
+        <button class="pill-cta" id="btnLibNewPl" style="background:var(--surface); color:var(--text); flex:1;">+ Плейлист</button>
+      </div>
+
+      <div id="libraryListContainer" style="max-height:55vh; overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА ПОИСКА ==================== -->
+  <div class="sheet-backdrop" id="searchSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Поиск треков</span>
+        <button class="sheet-close-btn" data-close-sheet="searchSheet">✕</button>
+      </div>
+      <div style="position:relative; margin-bottom:14px;">
+        <input class="form-input" id="searchInput" type="search" placeholder="Трек, исполнитель, альбом..." autocomplete="off" />
+      </div>
+      <div id="searchResultsList" style="max-height:55vh; overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА ОЧЕРЕДИ UP NEXT ==================== -->
+  <div class="sheet-backdrop" id="queueSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Очередь воспроизведения</span>
+        <button class="sheet-close-btn" data-close-sheet="queueSheet">✕</button>
+      </div>
+      <div id="queueListContainer" style="max-height:55vh; overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА ЗВУКА, EQ И РЕЖИМОВ ==================== -->
+  <div class="sheet-backdrop" id="fxSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Звук и эквалайзер</span>
+        <button class="sheet-close-btn" data-close-sheet="fxSheet">✕</button>
+      </div>
+
+      <div class="form-label">Аудио-режимы в один тап</div>
+      <div class="chips-row" id="audioModeChips">
+        <button class="chip active" data-audiomode="normal">Оригинал</button>
+        <button class="chip" data-audiomode="slowed">Slowed + Reverb</button>
+        <button class="chip" data-audiomode="nightcore">Nightcore</button>
+        <button class="chip" data-audiomode="8d">8D Audio</button>
+      </div>
+
+      <div class="form-label" style="margin-top:10px;">Скорость темпа (без изменения тона)</div>
+      <div class="chips-row" id="speedChips">
+        <button class="chip" data-speed="0.75">0.75x</button>
+        <button class="chip active" data-speed="1.0">1.0x</button>
+        <button class="chip" data-speed="1.25">1.25x</button>
+        <button class="chip" data-speed="1.5">1.5x</button>
+        <button class="chip" data-speed="2.0">2.0x</button>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding:10px 0; border-top:1px solid var(--border);">
+        <div>
+          <div style="font-size:14px; font-weight:700;">Нормализация громкости</div>
+          <div style="font-size:11.5px; color:var(--text-muted);">Выравнивает тихие и громкие треки</div>
+        </div>
+        <label class="ios-switch">
+          <input type="checkbox" id="toggleNormalize" />
+          <span class="ios-slider"></span>
+        </label>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div style="display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; margin-bottom:6px;">
+          <span>Кроссфейд (плавный переход)</span>
+          <span id="crossfadeLabel" style="color:var(--accent);">Выкл</span>
+        </div>
+        <input type="range" class="form-input" id="crossfadeRange" min="0" max="10" step="1" value="0" style="padding:0; height:6px;" />
+      </div>
+
+      <div class="form-label" style="margin-top:16px;">5-полосный эквалайзер</div>
+      <div class="chips-row" id="eqPresetChips">
+        <button class="chip active" data-preset="flat">Flat</button>
+        <button class="chip" data-preset="bass">Bass Boost</button>
+        <button class="chip" data-preset="vocal">Vocal</button>
+        <button class="chip" data-preset="electronic">Electronic</button>
+        <button class="chip" data-preset="rock">Rock</button>
+        <button class="chip" data-preset="jazz">Jazz</button>
+      </div>
+      <div class="eq-grid" id="eqSlidersGrid"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА ТЕКСТА (LRC КАРАОКЕ) ==================== -->
+  <div class="sheet-backdrop" id="lyricsSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title" id="lyricsTitle">Текст песни</span>
+        <div style="display:flex; gap:6px;">
+          <button class="pill-cta" id="btnAutoFetchLyrics" style="padding:6px 12px; font-size:11.5px;">Найти в сети</button>
+          <button class="sheet-close-btn" data-close-sheet="lyricsSheet">✕</button>
+        </div>
+      </div>
+      <div class="lyrics-view" id="lyricsScroll"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА ТАЙМЕРА СНА ==================== -->
+  <div class="sheet-backdrop" id="sleepSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Таймер сна</span>
+        <button class="sheet-close-btn" data-close-sheet="sleepSheet">✕</button>
+      </div>
+      <div id="sleepStatusLabel" style="font-size:13px; color:var(--accent); font-weight:700; margin-bottom:12px;"></div>
+      <div class="chips-row" id="sleepPills">
+        <button class="chip active" data-sleep-mode="0">Выкл</button>
+        <button class="chip" data-sleep-mode="track">В конце трека</button>
+        <button class="chip" data-sleep-mode="15">15 мин</button>
+        <button class="chip" data-sleep-mode="30">30 мин</button>
+        <button class="chip" data-sleep-mode="45">45 мин</button>
+        <button class="chip" data-sleep-mode="60">60 мин</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ШТОРКА НАСТРОЕК (ТОЛЬКО 2 ТЕМЫ) ==================== -->
+  <div class="sheet-backdrop" id="settingsSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title">Настройки</span>
+        <button class="sheet-close-btn" data-close-sheet="settingsSheet">✕</button>
+      </div>
+
+      <!-- Карточка Lumi Wrapped -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:14.5px;">Lumi Wrapped</strong>
+          <button class="pill-cta" id="btnShareWrapped" style="padding:5px 12px; font-size:11.5px;">Поделиться</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:10px; text-align:center;">
+          <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:12px;">
+            <div id="statMins" style="font-size:16px; font-weight:800; color:var(--accent);">0</div>
+            <div style="font-size:10px; color:var(--text-muted);">Минут</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:12px;">
+            <div id="statPlays" style="font-size:16px; font-weight:800; color:var(--accent);">0</div>
+            <div style="font-size:10px; color:var(--text-muted);">Треков</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:12px;">
+            <div id="statArtist" style="font-size:12px; font-weight:800; color:var(--accent); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">—</div>
+            <div style="font-size:10px; color:var(--text-muted);">Топ артист</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-label">Тема оформления (оставлено 2 лучших)</div>
+      <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-bottom:14px;">
+        <button class="action-btn-row" id="btnThemeGlass" style="margin:0; justify-content:center; text-align:center; font-weight:700;">
+          Жидкое стекло (Фото 1)
+        </button>
+        <button class="action-btn-row" id="btnThemePixel" style="margin:0; justify-content:center; text-align:center; font-weight:700;">
+          Google Pixel (Фото 2)
+        </button>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding:10px 0; border-top:1px solid var(--border);">
+        <div>
+          <div style="font-size:14px; font-weight:700;">Тёмный режим</div>
+          <div style="font-size:11.5px; color:var(--text-muted);">Переключение светлой и тёмной темы</div>
+        </div>
+        <label class="ios-switch">
+          <input type="checkbox" id="toggleDarkMode" checked />
+          <span class="ios-slider"></span>
+        </label>
+      </div>
+
+      <div class="action-list">
+        <button class="action-btn-row" id="btnExportBackup">Сохранить резервную копию (.json)</button>
+        <button class="action-btn-row" id="btnImportBackup">Восстановить из копии (.json)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Шторка действий трека -->
+  <div class="sheet-backdrop" id="trackActionsSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <span class="sheet-title" id="actionTrackTitle">Трек</span>
+        <button class="sheet-close-btn" data-close-sheet="trackActionsSheet">✕</button>
+      </div>
+      <div class="action-list">
+        <button class="action-btn-row" id="actPlayNext">Играть следующим (в очередь)</button>
+        <button class="action-btn-row" id="actRingtone">Создать рингтон (нарезка 30 сек)</button>
+        <button class="action-btn-row" id="actAutoTags">Найти обложку и текст в сети</button>
+        <button class="action-btn-row" id="actShare">Поделиться аудиофайлом</button>
+        <button class="action-btn-row danger" id="actDelete">Удалить из медиатеки</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Два аудиоэлемента для плавного кроссфейда -->
+  <audio id="audioElementA" playsinline preload="auto"></audio>
+  <audio id="audioElementB" playsinline preload="auto"></audio>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* ==================== 1. TAPTIC ENGINE ==================== */
+      async function triggerHaptic(type = "light") {
+        try {
+          if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics) {
+            const { Haptics, ImpactStyle, NotificationType } = window.Capacitor.Plugins;
+            if (type === "medium") await Haptics.impact({ style: ImpactStyle.Medium });
+            else if (type === "heavy") await Haptics.impact({ style: ImpactStyle.Heavy });
+            else if (type === "success") await Haptics.notification({ type: NotificationType.Success });
+            else await Haptics.impact({ style: ImpactStyle.Light });
+            return;
+          }
+        } catch {}
+        try {
+          if (navigator.vibrate) navigator.vibrate(type === "medium" ? 18 : 8);
+        } catch {}
+      }
+
+      /* ==================== 2. БАЗА ДАННЫХ INDEXEDDB ==================== */
+      const DB_NAME = "LumiUltraAudioDB";
+      const DB_VERSION = 1;
+      const STORE_META = "tracks_meta";
+      const STORE_BLOBS = "tracks_blobs";
+
+      class AudioDatabase {
+        constructor() { this.db = null; }
+        open() {
+          if (this.db) return Promise.resolve(this.db);
+          return new Promise((resolve, reject) => {
+            const req = indexedDB.open(DB_NAME, DB_VERSION);
+            req.onupgradeneeded = (e) => {
+              const db = e.target.result;
+              if (!db.objectStoreNames.contains(STORE_META)) db.createObjectStore(STORE_META, { keyPath: "id" });
+              if (!db.objectStoreNames.contains(STORE_BLOBS)) db.createObjectStore(STORE_BLOBS, { keyPath: "id" });
+            };
+            req.onsuccess = (e) => { this.db = e.target.result; resolve(this.db); };
+            req.onerror = () => reject(req.error);
+          });
+        }
+        async saveTrack(meta, blob) {
+          const db = await this.open();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction([STORE_META, STORE_BLOBS], "readwrite");
+            tx.objectStore(STORE_META).put(meta);
+            tx.objectStore(STORE_BLOBS).put({ id: meta.id, blob });
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+          });
+        }
+        async updateMeta(meta) {
+          const db = await this.open();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_META, "readwrite");
+            tx.objectStore(STORE_META).put(meta);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+          });
+        }
+        async getAllMeta() {
+          const db = await this.open();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_META, "readonly");
+            const req = tx.objectStore(STORE_META).getAll();
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => reject(req.error);
+          });
+        }
+        async getBlob(id) {
+          const db = await this.open();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_BLOBS, "readonly");
+            const req = tx.objectStore(STORE_BLOBS).get(id);
+            req.onsuccess = () => resolve(req.result ? req.result.blob : null);
+            req.onerror = () => reject(req.error);
+          });
+        }
+        async deleteTrack(id) {
+          const db = await this.open();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction([STORE_META, STORE_BLOBS], "readwrite");
+            tx.objectStore(STORE_META).delete(id);
+            tx.objectStore(STORE_BLOBS).delete(id);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+          });
+        }
+      }
+      const db = new AudioDatabase();
+
+      /* ==================== 3. ПАРСИНГ ТЕГОВ И ОБЛОЖЕК ==================== */
+      function decodeText(bytes) {
+        if (!bytes || !bytes.length) return "";
+        try {
+          return new TextDecoder("utf-8").decode(bytes).replace(/\0/g, "").trim();
+        } catch {
+          return "";
+        }
+      }
+
+      function generateFallbackCover(seed) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 440; canvas.height = 440;
+        const ctx = canvas.getContext("2d");
+        let hash = 0;
+        for (let i = 0; i < (seed || "Lumi").length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+        const h1 = Math.abs(hash) % 360, h2 = (h1 + 45) % 360;
+        const grad = ctx.createLinearGradient(0, 0, 440, 440);
+        grad.addColorStop(0, `hsl(${h1}, 65%, 45%)`);
+        grad.addColorStop(1, `hsl(${h2}, 60%, 20%)`);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 440, 440);
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.2)"; ctx.lineWidth = 3;
+        for (let r = 70; r <= 160; r += 30) { ctx.beginPath(); ctx.arc(220, 220, r, 0, Math.PI * 2); ctx.stroke(); }
+        return { dataUrl: canvas.toDataURL("image/jpeg", 0.88), hue: h1, rgb: "56, 178, 142" };
+      }
+
+      function processCoverBlob(imageBlob, fallbackSeed) {
+        return new Promise((resolve) => {
+          if (!imageBlob) {
+            resolve(generateFallbackCover(fallbackSeed));
+            return;
+          }
+          const url = URL.createObjectURL(imageBlob);
+          const img = new Image();
+          img.onload = () => {
+            URL.revokeObjectURL(url);
+            const size = 440, canvas = document.createElement("canvas");
+            canvas.width = size; canvas.height = size;
+            const ctx = canvas.getContext("2d");
+            const minSide = Math.min(img.width, img.height);
+            ctx.drawImage(img, (img.width - minSide) / 2, (img.height - minSide) / 2, minSide, minSide, 0, 0, size, size);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.84);
+            const rgbInfo = extractColor(ctx, size);
+            resolve({ dataUrl, hue: rgbInfo.hue, rgb: rgbInfo.rgb });
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(url);
+            resolve(generateFallbackCover(fallbackSeed));
+          };
+          img.src = url;
+        });
+      }
+
+      function extractColor(ctx, size) {
+        const d = ctx.getImageData(0, 0, size, size).data;
+        let rSum = 0, gSum = 0, bSum = 0, count = 0;
+        for (let i = 0; i < d.length; i += 64) {
+          rSum += d[i]; gSum += d[i + 1]; bSum += d[i + 2]; count++;
+        }
+        const r = Math.round(rSum / count), g = Math.round(gSum / count), b = Math.round(bSum / count);
+        const hue = rgbToHue(r, g, b);
+        return { hue, rgb: `${r}, ${g}, ${b}` };
+      }
+
+      function rgbToHue(r, g, b) {
+        r /= 255; g /= 255; b /= 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+        if (d === 0) return 165;
+        let h = 0;
+        if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+        else if (max === g) h = ((b - r) / d + 2) * 60;
+        else h = ((r - g) / d + 4) * 60;
+        return Math.round(h);
+      }
+
+      function probeAudioDuration(file) {
+        return new Promise((resolve) => {
+          const a = document.createElement("audio");
+          a.preload = "metadata";
+          const url = URL.createObjectURL(file);
+          a.onloadedmetadata = () => { URL.revokeObjectURL(url); resolve(a.duration || 0); };
+          a.onerror = () => { URL.revokeObjectURL(url); resolve(0); };
+          a.src = url;
+        });
+      }
+
+      /* ==================== 4. ПРЕФЫ И СОСТОЯНИЕ ==================== */
+      const LS_KEY = "lumi_ultra_prefs_v3";
+      const defaultPrefs = {
+        theme: "glass", // "glass" (Фото 1) | "pixel" (Фото 2)
+        darkMode: true,
+        playlists: [],
+        favorites: [],
+        playCounts: {},
+        totalListenSec: 0,
+        eqGains: [0, 0, 0, 0, 0],
+        eqPreset: "flat",
+        audioMode: "normal",
+        playbackSpeed: 1.0,
+        crossfadeSec: 0,
+        normalize: false,
+        flowMode: "repeatAll", // "repeatAll" | "shuffle" | "repeatOne"
+        timeMode: "total"
+      };
+      let prefs = { ...defaultPrefs };
+      try {
+        const s = JSON.parse(localStorage.getItem(LS_KEY));
+        if (s) {
+          prefs = { ...defaultPrefs, ...s };
+          // Принудительно ограничиваем двумя темами
+          if (prefs.theme !== "glass" && prefs.theme !== "pixel") prefs.theme = "glass";
+        }
+      } catch {}
+      function savePrefs() { try { localStorage.setItem(LS_KEY, JSON.stringify(prefs)); } catch {} }
+
+      const state = {
+        tracks: [],
+        currentTrackId: null,
+        upNextQueue: [],
+        isPlaying: false,
+        parsedLyrics: [],
+        activeLyricIdx: -1,
+        contextTrackId: null,
+        sleepMode: 0, // 0 | "track" | minutes
+        sleepEndTime: null,
+        sleepInterval: null,
+        isSeeking: false,
+        crossfadeTriggered: false,
+        isMuted: false,
+        prevVolume: 1.0,
+        libTab: "all"
+      };
+
+      /* ==================== 5. АУДИО ДВИЖОК ==================== */
+      const deckA = document.getElementById("audioElementA");
+      const deckB = document.getElementById("audioElementB");
+      let activeDeck = deckA;
+      let standbyDeck = deckB;
+      const deckUrls = new Map();
+
+      let audioCtx = null;
+      const connectedDecks = new WeakSet();
+      let eqFilters = [], dryGainNode = null, wetGainNode = null, convolverNode = null, compressorNode = null, pannerNode = null;
+      let webAudioActive = false;
+      let panAngle = 0;
+
+      const EQ_FREQS = [60, 230, 910, 3600, 14000];
+      const EQ_PRESETS = {
+        flat: [0, 0, 0, 0, 0], bass: [6, 3.5, 0, 1, 2], vocal: [-2, 1.5, 4.5, 3, 1],
+        electronic: [5, 2, -1.5, 3, 5], rock: [4, 2, -1, 2.5, 4], jazz: [3, 1.5, 1, 1.5, 2.5]
+      };
+
+      function ensureWebAudio() {
+        if (!webAudioActive) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          audioCtx = new AC();
+
+          eqFilters = EQ_FREQS.map((fVal, idx) => {
+            const f = audioCtx.createBiquadFilter();
+            f.frequency.value = fVal;
+            f.gain.value = prefs.eqGains[idx] || 0;
+            return f;
+          });
+          for (let i = 0; i < eqFilters.length - 1; i++) eqFilters[i].connect(eqFilters[i + 1]);
+
+          compressorNode = audioCtx.createDynamicsCompressor();
+          pannerNode = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+
+          dryGainNode = audioCtx.createGain();
+          wetGainNode = audioCtx.createGain();
+          convolverNode = audioCtx.createConvolver();
+
+          [deckA, deckB].forEach((d) => {
+            if (!connectedDecks.has(d)) {
+              const src = audioCtx.createMediaElementSource(d);
+              src.connect(eqFilters[0]);
+              connectedDecks.add(d);
+            }
+          });
+
+          const lastEq = eqFilters[eqFilters.length - 1];
+          lastEq.connect(dryGainNode);
+          dryGainNode.connect(compressorNode);
+          if (pannerNode) {
+            compressorNode.connect(pannerNode);
+            pannerNode.connect(audioCtx.destination);
+          } else {
+            compressorNode.connect(audioCtx.destination);
+          }
+
+          webAudioActive = true;
+          applyAudioEffects();
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+      }
+
+      function applyAudioEffects() {
+        if (!webAudioActive && (prefs.audioMode !== "normal" || prefs.normalize)) ensureWebAudio();
+
+        const curSpeed = prefs.playbackSpeed || 1.0;
+        const mode = prefs.audioMode;
+
+        [deckA, deckB].forEach((d) => {
+          if (mode === "slowed") {
+            d.preservesPitch = false; d.playbackRate = 0.85;
+          } else if (mode === "nightcore") {
+            d.preservesPitch = false; d.playbackRate = 1.22;
+          } else {
+            d.preservesPitch = true; d.playbackRate = curSpeed;
+          }
+        });
+
+        if (webAudioActive) {
+          eqFilters.forEach((f, idx) => f.gain.setTargetAtTime(prefs.eqGains[idx] || 0, audioCtx.currentTime, 0.02));
+          compressorNode.ratio.setTargetAtTime(prefs.normalize ? 8 : 1, audioCtx.currentTime, 0.05);
+          compressorNode.threshold.setTargetAtTime(prefs.normalize ? -24 : 0, audioCtx.currentTime, 0.05);
+          if (pannerNode && mode !== "8d") pannerNode.pan.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+        }
+      }
+
+      function setDeckSource(deck, blob) {
+        const prev = deckUrls.get(deck);
+        if (prev) URL.revokeObjectURL(prev);
+        const url = URL.createObjectURL(blob);
+        deckUrls.set(deck, url);
+        deck.src = url;
+      }
+
+      function getQueueTracks() {
+        if (!state.tracks.length) return [];
+        if (prefs.flowMode === "shuffle") {
+          return [...state.tracks].sort(() => 0.5 - Math.random());
+        }
+        return state.tracks;
+      }
+
+      async function playTrackById(id, autoPlay = true, useCrossfade = false) {
+        const track = state.tracks.find((t) => t.id === id);
+        if (!track) return;
+        const blob = await db.getBlob(id);
+        if (!blob) { showToast("Файл не найден"); return; }
+
+        state.currentTrackId = id;
+        state.crossfadeTriggered = false;
+
+        if (autoPlay) {
+          prefs.playCounts[id] = (prefs.playCounts[id] || 0) + 1;
+          savePrefs();
+        }
+
+        applyCoverColor(track);
+        parseTrackLyrics(track.lyrics || "");
+        updatePlayerUI(track);
+
+        standbyDeck.pause();
+        setDeckSource(activeDeck, blob);
+        applyAudioEffects();
+
+        if (autoPlay) {
+          try {
+            if (webAudioActive && audioCtx.state === "suspended") await audioCtx.resume();
+            await activeDeck.play();
+            state.isPlaying = true;
+          } catch { state.isPlaying = false; }
+        } else {
+          state.isPlaying = false;
+        }
+
+        syncPlayPauseIcon();
+        updateMediaSession(track);
+      }
+
+      function playNextTrack(fromEnded = false) {
+        triggerHaptic("light");
+        if (fromEnded && state.sleepMode === "track") {
+          activeDeck.pause(); state.isPlaying = false; state.sleepMode = 0;
+          updateSleepUI(); syncPlayPauseIcon();
+          showToast("Таймер сна завершил музыку");
+          return;
+        }
+        if (state.upNextQueue.length > 0) {
+          const nextId = state.upNextQueue.shift();
+          playTrackById(nextId, true, false);
+          return;
+        }
+        const list = getQueueTracks();
+        if (!list.length) return;
+        if (fromEnded && prefs.flowMode === "repeatOne" && state.currentTrackId) {
+          activeDeck.currentTime = 0;
+          activeDeck.play();
+          return;
+        }
+        const curIdx = list.findIndex((t) => t.id === state.currentTrackId);
+        const nextIdx = (curIdx + 1) % list.length;
+        playTrackById(list[nextIdx].id, true, false);
+      }
+
+      function playPrevTrack() {
+        triggerHaptic("light");
+        if (activeDeck.currentTime > 3) { activeDeck.currentTime = 0; return; }
+        const list = getQueueTracks();
+        if (!list.length) return;
+        const curIdx = list.findIndex((t) => t.id === state.currentTrackId);
+        const prevIdx = (curIdx - 1 + list.length) % list.length;
+        playTrackById(list[prevIdx].id, true, false);
+      }
+
+      async function togglePlayPause() {
+        triggerHaptic("light");
+        if (!state.currentTrackId && state.tracks.length > 0) {
+          await playTrackById(state.tracks[0].id, true, false);
+          return;
+        }
+        if (activeDeck.paused) {
+          if (webAudioActive && audioCtx.state === "suspended") await audioCtx.resume();
+          try { await activeDeck.play(); state.isPlaying = true; } catch {}
+        } else {
+          activeDeck.pause();
+          state.isPlaying = false;
+        }
+        syncPlayPauseIcon();
+      }
+
+      function toggleMute() {
+        triggerHaptic("light");
+        state.isMuted = !state.isMuted;
+        activeDeck.volume = state.isMuted ? 0 : 1;
+        const svg = document.getElementById("muteIconSvg");
+        if (state.isMuted) {
+          svg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
+          showToast("Звук выключен");
+        } else {
+          svg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+          showToast("Звук включен");
+        }
+      }
+
+      /* ==================== 6. РЕНДЕРИНГ ИНТЕРФЕЙСА (ФОТО 1 И ФОТО 2) ==================== */
+      function applyCoverColor(track) {
+        if (!track) return;
+        const root = document.documentElement;
+        const hue = track.hue ?? 165;
+        const rgb = track.rgb || "56, 178, 142";
+        root.style.setProperty("--hue", String(hue));
+        root.style.setProperty("--accent-rgb", rgb);
+        root.style.setProperty("--accent-soft", `rgba(${rgb}, 0.2)`);
+        root.style.setProperty("--accent-glow", `rgba(${rgb}, 0.4)`);
+
+        // Обновляем размытый живой фон (Фото 1)
+        const backdrop = document.getElementById("ambientBackdrop");
+        if (backdrop && track.coverDataUrl) {
+          backdrop.style.backgroundImage = `url('${track.coverDataUrl}')`;
+        }
+      }
+
+      function updatePlayerUI(track) {
+        if (!track) return;
+        document.getElementById("pillTrackName").textContent = track.title;
+        document.getElementById("pillArtistName").textContent = track.artist;
+        document.getElementById("pillAvatar").src = track.coverDataUrl;
+
+        // Обновляем карусель (Фото 1: предыдущий, текущий, следующий)
+        const list = state.tracks;
+        const curIdx = list.findIndex((t) => t.id === track.id);
+        const prevTrack = list[(curIdx - 1 + list.length) % list.length] || track;
+        const nextTrack = list[(curIdx + 1) % list.length] || track;
+
+        document.getElementById("imgCoverCenter").src = track.coverDataUrl;
+        document.getElementById("imgCoverPrev").src = prevTrack.coverDataUrl;
+        document.getElementById("imgCoverNext").src = nextTrack.coverDataUrl;
+
+        // Синхронизация времени
+        syncTimeDisplay(activeDeck.currentTime || 0, track.duration || 0);
+
+        // Синхронизация кнопки "Любимое"
+        const isFav = prefs.favorites.includes(track.id);
+        const favBtn = document.getElementById("btnFavTrack");
+        favBtn.classList.toggle("liked", isFav);
+        const path = favBtn.querySelector("path");
+        if (path) path.setAttribute("fill", isFav ? "currentColor" : "none");
+
+        renderLyricsLines();
+      }
+
+      function syncTimeDisplay(cur, dur) {
+        document.getElementById("timeElapsed").textContent = formatTime(cur);
+        const totalEl = document.getElementById("timeTotal");
+        if (prefs.timeMode === "remaining" && dur > 0) {
+          totalEl.textContent = `-${formatTime(Math.max(0, dur - cur))}`;
+        } else {
+          totalEl.textContent = formatTime(dur);
+        }
+
+        const ratio = dur > 0 ? Math.min(1, cur / dur) : 0;
+
+        // 1. Для Liquid Glass (Фото 1)
+        document.getElementById("glassScrubberFill").style.width = `${ratio * 100}%`;
+        document.getElementById("glassScrubberThumb").style.left = `${ratio * 100}%`;
+
+        // 2. Для Google Pixel (Фото 2) волнистый холст
+        if (prefs.theme === "pixel") {
+          drawPixelWaveScrubber(ratio);
+        }
+      }
+
+      let pixelWavePhase = 0;
+      function drawPixelWaveScrubber(ratio) {
+        const canvas = document.getElementById("pixelWaveCanvas");
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+        }
+        const ctx = canvas.getContext("2d");
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.scale(dpr, dpr);
+
+        const playedW = Math.max(0, Math.min(w, w * ratio));
+        const centerY = h / 2;
+        const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#38b28e";
+
+        // Проигранная часть: волнистая синусоида (Фото 2)
+        if (playedW > 0) {
+          ctx.beginPath();
+          ctx.strokeStyle = accent;
+          ctx.lineWidth = 4;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          const freq = 0.16;
+          const amp = state.isPlaying ? 3.5 : 2.0;
+          for (let x = 0; x <= playedW; x += 1.5) {
+            const y = centerY + Math.sin(x * freq + pixelWavePhase) * amp;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+
+          // Бегунок-точка на конце волны
+          const thumbY = centerY + Math.sin(playedW * freq + pixelWavePhase) * amp;
+          ctx.beginPath();
+          ctx.fillStyle = accent;
+          ctx.arc(playedW, thumbY, 6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Оставшаяся часть: полупрозрачная прямая линия
+        if (playedW < w) {
+          ctx.beginPath();
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+          ctx.lineWidth = 4;
+          ctx.lineCap = "round";
+          ctx.moveTo(playedW + (playedW > 0 ? 5 : 0), centerY);
+          ctx.lineTo(w, centerY);
+          ctx.stroke();
+        }
+
+        ctx.restore();
+        if (state.isPlaying) pixelWavePhase += 0.06;
+      }
+
+      function syncPlayPauseIcon() {
+        const svg = document.getElementById("playIconSvg");
+        if (state.isPlaying) {
+          svg.innerHTML = `<rect x="6" y="4" width="4.5" height="16" rx="1.2"></rect><rect x="13.5" y="4" width="4.5" height="16" rx="1.2"></rect>`;
+        } else {
+          svg.innerHTML = `<polygon points="7 4 20 12 7 20 7 4"></polygon>`;
+        }
+      }
+
+      function formatTime(sec) {
+        if (!Number.isFinite(sec) || sec < 0) return "0:00";
+        const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+        return `${m}:${s < 10 ? "0" : ""}${s}`;
+      }
+
+      function escapeHtml(str) {
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      function applyTheme() {
+        document.documentElement.setAttribute("data-theme", prefs.theme);
+        document.documentElement.setAttribute("data-dark", prefs.darkMode ? "true" : "false");
+        document.getElementById("topThemeModeLabel").textContent = prefs.theme === "pixel" ? "Google Pixel" : "Жидкое стекло";
+        document.getElementById("btnThemeGlass").classList.toggle("active", prefs.theme === "glass");
+        document.getElementById("btnThemePixel").classList.toggle("active", prefs.theme === "pixel");
+        document.getElementById("toggleDarkMode").checked = !!prefs.darkMode;
+        savePrefs();
+      }
+
+      /* ==================== 7. КАРАОКЕ LRC ==================== */
+      function parseTrackLyrics(rawText) {
+        state.activeLyricIdx = -1;
+        if (!rawText || !rawText.trim()) { state.parsedLyrics = []; renderLyricsLines(); return; }
+        const timeRegex = /\[(\d{1,2}):(\d{2})(?:[.:](\d{1,3}))?\]/g;
+        const parsed = [];
+        for (const line of rawText.split(/\r?\n/)) {
+          const matches = [...line.matchAll(timeRegex)];
+          const text = line.replace(timeRegex, "").trim();
+          if (matches.length > 0) {
+            for (const m of matches) {
+              const msStr = m[3] || "0";
+              parsed.push({ time: parseInt(m[1], 10) * 60 + parseInt(m[2], 10) + parseInt(msStr, 10) / Math.pow(10, msStr.length), text: text || "• • •" });
+            }
+          } else if (text) parsed.push({ time: null, text });
+        }
+        if (parsed.some((i) => i.time !== null)) parsed.sort((a, b) => (a.time ?? 999999) - (b.time ?? 999999));
+        state.parsedLyrics = parsed;
+        renderLyricsLines();
+      }
+
+      function renderLyricsLines() {
+        const box = document.getElementById("lyricsScroll");
+        if (!state.parsedLyrics.length) {
+          box.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:14px; margin-top:40px;">Текст песни не найден.<br>Нажмите «Найти в сети» выше.</div>`;
+          return;
+        }
+        box.innerHTML = state.parsedLyrics.map((item, idx) =>
+          `<div class="${item.time !== null ? "lyric-line timed" : "lyric-line plain"}" data-lyric-idx="${idx}">${escapeHtml(item.text)}</div>`
+        ).join("");
+      }
+
+      function syncLyricsHighlight(currentTime) {
+        if (!state.parsedLyrics.length) return;
+        let newIdx = -1;
+        for (let i = 0; i < state.parsedLyrics.length; i++) {
+          if (state.parsedLyrics[i].time !== null && currentTime >= state.parsedLyrics[i].time) newIdx = i;
+        }
+        if (newIdx !== state.activeLyricIdx) {
+          state.activeLyricIdx = newIdx;
+          const nodes = document.getElementById("lyricsScroll").querySelectorAll(".lyric-line");
+          nodes.forEach((el, idx) => el.classList.toggle("active", idx === newIdx));
+          if (newIdx >= 0 && nodes[newIdx]) nodes[newIdx].scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      /* ==================== 8. СВАЙПЫ ПО ОБЛОЖКЕ (КАРУСЕЛЬ) ==================== */
+      const stage = document.getElementById("carouselStage");
+      const cardCenter = document.getElementById("cardCenter");
+      let startX = 0, deltaX = 0, isSwiping = false;
+
+      stage.addEventListener("touchstart", (e) => {
+        if (e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        deltaX = 0;
+        isSwiping = true;
+        cardCenter.classList.add("swiping");
+      }, { passive: true });
+
+      stage.addEventListener("touchmove", (e) => {
+        if (!isSwiping || e.touches.length !== 1) return;
+        deltaX = e.touches[0].clientX - startX;
+        cardCenter.style.transform = `translateX(${deltaX * 0.7}px) scale(${1 - Math.abs(deltaX) * 0.0008})`;
+      }, { passive: true });
+
+      stage.addEventListener("touchend", () => {
+        if (!isSwiping) return;
+        isSwiping = false;
+        cardCenter.classList.remove("swiping");
+        cardCenter.style.transform = "";
+        if (deltaX < -55) playNextTrack(false);
+        else if (deltaX > 55) playPrevTrack();
+      });
+
+      document.getElementById("cardPrev").onclick = () => playPrevTrack();
+      document.getElementById("cardNext").onclick = () => playNextTrack(false);
+
+      /* ==================== 9. ТАЙМЕР СНА ==================== */
+      function updateSleepUI() {
+        const dot = document.getElementById("dockSleepDot");
+        const status = document.getElementById("sleepStatusLabel");
+        if (state.sleepMode === "track") {
+          dot.classList.add("active");
+          if (status) status.textContent = "Режим: музыка остановится в конце текущего трека";
+        } else if (state.sleepEndTime) {
+          dot.classList.add("active");
+          const rem = Math.max(0, state.sleepEndTime - Date.now());
+          const s = Math.ceil(rem / 1000);
+          if (status) status.textContent = `Осталось: ${Math.floor(s / 60)}:${s % 60 < 10 ? "0" : ""}${s % 60}`;
+        } else {
+          dot.classList.remove("active");
+          if (status) status.textContent = "Таймер сна отключён";
+        }
+      }
+
+      function setSleepTimer(mode) {
+        if (state.sleepInterval) clearInterval(state.sleepInterval);
+        state.sleepMode = mode;
+        document.querySelectorAll("#sleepPills .chip").forEach((c) => c.classList.toggle("active", c.dataset.sleepMode === String(mode)));
+
+        if (mode === 0 || mode === "0") {
+          state.sleepEndTime = null;
+          updateSleepUI();
+          showToast("Таймер сна выключен");
+          return;
+        }
+        if (mode === "track") {
+          state.sleepEndTime = null;
+          updateSleepUI();
+          showToast("Остановится в конце трека");
+          return;
+        }
+        const mins = Number(mode);
+        state.sleepEndTime = Date.now() + mins * 60000;
+        updateSleepUI();
+        showToast(`Таймер: ${mins} минут`);
+
+        state.sleepInterval = setInterval(() => {
+          if (!state.sleepEndTime) return;
+          const rem = state.sleepEndTime - Date.now();
+          if (rem <= 0) {
+            clearInterval(state.sleepInterval);
+            activeDeck.pause();
+            state.isPlaying = false;
+            state.sleepMode = 0;
+            state.sleepEndTime = null;
+            syncPlayPauseIcon();
+            updateSleepUI();
+            showToast("Таймер сна остановил музыку");
+            return;
+          }
+          if (rem <= 15000) {
+            activeDeck.volume = Math.max(0.02, rem / 15000);
+          }
+          updateSleepUI();
+        }, 1000);
+      }
+
+      /* ==================== 10. ШТОРКИ И ДИАЛОГИ ==================== */
+      function openSheet(id) { triggerHaptic("light"); document.getElementById(id).classList.add("open"); }
+      function closeSheet(id) { document.getElementById(id).classList.remove("open"); }
+      function showToast(msg) {
+        const el = document.getElementById("toast"); el.textContent = msg; el.classList.add("show");
+        clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 2500);
+      }
+
+      function renderLibraryList() {
+        const box = document.getElementById("libraryListContainer");
+        let list = [...state.tracks];
+        if (state.libTab === "favorites") list = list.filter((t) => prefs.favorites.includes(t.id));
+        else if (state.libTab === "recent") list = list.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0));
+
+        if (!list.length) {
+          box.innerHTML = `<div style="text-align:center; padding:30px 10px; color:var(--text-muted); font-size:13.5px;">Список пуст. Нажмите «Загрузить музыку» выше.</div>`;
+          return;
+        }
+
+        box.innerHTML = list.map((t, i) => `
+          <div class="track-row${t.id === state.currentTrackId ? " playing" : ""}" data-track-id="${t.id}">
+            <img class="track-thumb" src="${t.coverDataUrl}" alt="" />
+            <div class="track-info-col">
+              <div class="track-name-lbl">${escapeHtml(t.title)}</div>
+              <div class="track-sub-lbl">${escapeHtml(t.artist)} • ${formatTime(t.duration)}</div>
+            </div>
+            <button class="top-btn" data-more-track="${t.id}" style="color:var(--text-muted);">⋮</button>
+          </div>
+        `).join("");
+      }
+
+      function renderQueueList() {
+        const box = document.getElementById("queueListContainer");
+        const cur = state.tracks.find((t) => t.id === state.currentTrackId);
+        let html = "";
+        if (cur) {
+          html += `<div class="form-label">Сейчас играет</div>
+            <div class="track-row playing">
+              <img class="track-thumb" src="${cur.coverDataUrl}" alt="" />
+              <div class="track-info-col">
+                <div class="track-name-lbl">${escapeHtml(cur.title)}</div>
+                <div class="track-sub-lbl">${escapeHtml(cur.artist)}</div>
+              </div>
+            </div>`;
+        }
+        html += `<div class="form-label" style="margin-top:14px;">Далее в очереди (${state.upNextQueue.length})</div>`;
+        if (!state.upNextQueue.length) {
+          html += `<div style="font-size:13px; color:var(--text-muted); padding:10px 0;">Очередь пуста</div>`;
+        } else {
+          html += state.upNextQueue.map((id, idx) => {
+            const t = state.tracks.find((x) => x.id === id);
+            if (!t) return "";
+            return `<div class="track-row">
+              <img class="track-thumb" src="${t.coverDataUrl}" alt="" />
+              <div class="track-info-col"><div class="track-name-lbl">${escapeHtml(t.title)}</div></div>
+              <button class="top-btn" data-rm-queue="${idx}" style="color:#ff5c6c;">✕</button>
+            </div>`;
+          }).join("");
+        }
+        box.innerHTML = html;
+      }
+
+      function renderEqSliders() {
+        const grid = document.getElementById("eqSlidersGrid");
+        grid.innerHTML = EQ_FREQS.map((freq, idx) => `
+          <div class="eq-col">
+            <span style="font-size:10px; color:var(--accent);" id="eqVal_${idx}">${(prefs.eqGains[idx] || 0) > 0 ? "+" : ""}${prefs.eqGains[idx] || 0}dB</span>
+            <div class="eq-range-wrap">
+              <input type="range" class="eq-range" data-eq-idx="${idx}" min="-12" max="12" step="0.5" value="${prefs.eqGains[idx] || 0}" />
+            </div>
+            <span style="font-size:10px; color:var(--text-muted);">${freq >= 1000 ? freq/1000 + 'k' : freq}</span>
+          </div>
+        `).join("");
+      }
+
+      /* ==================== 11. ИМПОРТ И ПАРСИНГ ФАЙЛОВ ==================== */
+      async function importAudioFiles(fileList) {
+        const files = Array.from(fileList || []);
+        if (!files.length) return;
+        showToast(`Импорт ${files.length} файлов...`);
+        let count = 0;
+        for (const file of files) {
+          const cleanName = file.name.replace(/\.[^/.]+$/, "");
+          let artist = "Неизвестный исполнитель", title = cleanName;
+          if (cleanName.includes(" - ")) {
+            const p = cleanName.split(" - ");
+            artist = p[0].trim();
+            title = p.slice(1).join(" - ").trim();
+          }
+          const [coverInfo, duration] = await Promise.all([
+            processCoverBlob(null, cleanName),
+            probeAudioDuration(file)
+          ]);
+          const trackRec = {
+            id: `trk_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+            title, artist, album: "", duration,
+            coverDataUrl: coverInfo.dataUrl, hue: coverInfo.hue, rgb: coverInfo.rgb,
+            lyrics: "", fileName: file.name, mimeType: file.type || "audio/mpeg", addedAt: Date.now()
+          };
+          await db.saveTrack(trackRec, file);
+          state.tracks.unshift(trackRec);
+          count++;
+        }
+        showToast(`Добавлено треков: ${count}`);
+        if (!state.currentTrackId && state.tracks.length > 0) {
+          await playTrackById(state.tracks[0].id, false);
+        } else if (state.currentTrackId) {
+          const cur = state.tracks.find((t) => t.id === state.currentTrackId);
+          if (cur) updatePlayerUI(cur);
+        }
+      }
+
+      async function autoSearchOnline(trackId) {
+        const track = state.tracks.find((t) => t.id === trackId);
+        if (!track) return;
+        if (!navigator.onLine) { showToast("Нет интернета"); return; }
+        showToast("Поиск обложки и текста...");
+        let updated = false;
+
+        let cleanTitle = track.title.replace(/\((official|video|audio|lyrics|remastered).*?\)/gi, "").trim();
+        const qStr = track.artist !== "Неизвестный исполнитель" ? `${track.artist} ${cleanTitle}` : cleanTitle;
+        const q = encodeURIComponent(qStr);
+
+        try {
+          const lrcResp = await fetch(`https://lrclib.net/api/search?q=${q}`);
+          if (lrcResp.ok) {
+            const list = await lrcResp.json();
+            if (Array.isArray(list) && list.length > 0) {
+              const best = list.find((x) => x.syncedLyrics) || list[0];
+              track.lyrics = best.syncedLyrics || best.plainLyrics || "";
+              updated = true;
+            }
+          }
+
+          const itunesResp = await fetch(`https://itunes.apple.com/search?term=${q}&entity=song&limit=1`);
+          if (itunesResp.ok) {
+            const data = await itunesResp.json();
+            if (data.results && data.results.length > 0) {
+              const item = data.results[0];
+              if (item.artworkUrl100) {
+                const hiRes = item.artworkUrl100.replace("100x100bb", "600x600bb");
+                const imgResp = await fetch(hiRes);
+                if (imgResp.ok) {
+                  const b = await imgResp.blob();
+                  const proc = await processCoverBlob(b, track.title);
+                  track.coverDataUrl = proc.dataUrl;
+                  track.hue = proc.hue;
+                  track.rgb = proc.rgb;
+                  if (track.artist === "Неизвестный исполнитель" && item.artistName) track.artist = item.artistName;
+                  updated = true;
+                }
+              }
+            }
+          }
+        } catch {}
+
+        if (updated) {
+          await db.updateMeta(track);
+          if (track.id === state.currentTrackId) {
+            applyCoverColor(track);
+            parseTrackLyrics(track.lyrics || "");
+            updatePlayerUI(track);
+          }
+          showToast("Обложка и текст обновлены!");
+        } else {
+          showToast("Совпадений не найдено");
+        }
+      }
+
+      function updateMediaSession(track) {
+        if (!("mediaSession" in navigator) || !track) return;
+        try {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: track.title,
+            artist: track.artist,
+            album: track.album || "Lumi Ultra",
+            artwork: track.coverDataUrl ? [{ src: track.coverDataUrl, sizes: "440x440", type: "image/jpeg" }] : []
+          });
+          navigator.mediaSession.playbackState = state.isPlaying ? "playing" : "paused";
+        } catch {}
+      }
+
+      /* ==================== 12. ПРИВЯЗКА СОБЫТИЙ ==================== */
+      function bindEvents() {
+        activeDeck.ontimeupdate = () => {
+          const cur = activeDeck.currentTime || 0, dur = activeDeck.duration || 0;
+          if (!state.isSeeking && dur > 0) {
+            document.getElementById("seekSlider").value = Math.round((cur / dur) * 1000);
+            syncTimeDisplay(cur, dur);
+          }
+          syncLyricsHighlight(cur);
+
+          if (!activeDeck.paused) {
+            prefs.totalListenSec = (prefs.totalListenSec || 0) + 1;
+            if (prefs.totalListenSec % 15 === 0) savePrefs();
+          }
+
+          // Кроссфейд
+          if (prefs.crossfadeSec > 0 && !state.crossfadeTriggered && dur > prefs.crossfadeSec + 3 && dur - cur <= prefs.crossfadeSec) {
+            state.crossfadeTriggered = true;
+            playNextTrack(true);
+          }
+        };
+
+        activeDeck.onplay = () => { state.isPlaying = true; syncPlayPauseIcon(); };
+        activeDeck.onpause = () => { if (!state.crossfadeTriggered) { state.isPlaying = false; syncPlayPauseIcon(); } };
+        activeDeck.onended = () => { if (!state.crossfadeTriggered) playNextTrack(true); };
+
+        // Верхний бар
+        document.getElementById("btnOpenLibrary").onclick = () => { renderLibraryList(); openSheet("librarySheet"); };
+        document.getElementById("btnTopSearch").onclick = () => openSheet("searchSheet");
+        document.getElementById("btnTopQueue").onclick = () => { renderQueueList(); openSheet("queueSheet"); };
+
+        // Скруббер
+        const seek = document.getElementById("seekSlider");
+        seek.oninput = () => {
+          state.isSeeking = true;
+          if (activeDeck.duration > 0) {
+            const cur = (seek.value / 1000) * activeDeck.duration;
+            syncTimeDisplay(cur, activeDeck.duration);
+          }
+        };
+        seek.onchange = () => {
+          triggerHaptic("light");
+          if (activeDeck.duration > 0) activeDeck.currentTime = (seek.value / 1000) * activeDeck.duration;
+          state.isSeeking = false;
+        };
+
+        document.getElementById("timeTotal").onclick = () => {
+          triggerHaptic("light");
+          prefs.timeMode = prefs.timeMode === "remaining" ? "total" : "remaining";
+          savePrefs();
+          syncTimeDisplay(activeDeck.currentTime || 0, activeDeck.duration || 0);
+        };
+
+        // Кнопки управления (Фото 1)
+        document.getElementById("btnMainPlay").onclick = togglePlayPause;
+        document.getElementById("btnNextTrack").onclick = () => playNextTrack(false);
+        document.getElementById("btnPrevTrack").onclick = playPrevTrack;
+        document.getElementById("btnMuteToggle").onclick = toggleMute;
+        document.getElementById("btnFavTrack").onclick = () => {
+          if (!state.currentTrackId) return;
+          triggerHaptic("light");
+          const id = state.currentTrackId;
+          if (prefs.favorites.includes(id)) {
+            prefs.favorites = prefs.favorites.filter((x) => x !== id);
+            showToast("Удалено из любимого");
+          } else {
+            prefs.favorites.push(id);
+            showToast("Добавлено в любимое");
+          }
+          savePrefs();
+          updatePlayerUI(state.tracks.find((t) => t.id === id));
+        };
+
+        // Парящий док (Фото 1)
+        document.getElementById("btnDockFlowMode").onclick = () => {
+          triggerHaptic("light");
+          const modes = ["repeatAll", "shuffle", "repeatOne"];
+          prefs.flowMode = modes[(modes.indexOf(prefs.flowMode) + 1) % modes.length];
+          savePrefs();
+          const names = { repeatAll: "Повтор всех", shuffle: "Перемешивание", repeatOne: "Повтор одного трека" };
+          showToast(names[prefs.flowMode]);
+        };
+
+        document.getElementById("btnDockFx").onclick = () => { renderEqSliders(); openSheet("fxSheet"); };
+        document.getElementById("btnDockLyrics").onclick = () => openSheet("lyricsSheet");
+        document.getElementById("btnDockSleep").onclick = () => { updateSleepUI(); openSheet("sleepSheet"); };
+
+        document.getElementById("btnTrackInfoPill").onclick = () => openSheet("lyricsSheet");
+        document.getElementById("btnShareTrack").onclick = async () => {
+          if (!state.currentTrackId) return;
+          const tr = state.tracks.find((t) => t.id === state.currentTrackId);
+          const blob = await db.getBlob(state.currentTrackId);
+          if (blob && navigator.share) {
+            const f = new File([blob], `${tr.title}.mp3`, { type: "audio/mpeg" });
+            try { await navigator.share({ files: [f], title: tr.title }); } catch {}
+          }
+        };
+
+        document.getElementById("btnMoreTrack").onclick = () => {
+          if (!state.currentTrackId) return;
+          state.contextTrackId = state.currentTrackId;
+          const tr = state.tracks.find((t) => t.id === state.contextTrackId);
+          document.getElementById("actionTrackTitle").textContent = tr ? tr.title : "Трек";
+          openSheet("trackActionsSheet");
+        };
+
+        // Темы: Жидкое стекло и Google Pixel
+        document.getElementById("btnThemeGlass").onclick = () => {
+          triggerHaptic("medium"); prefs.theme = "glass"; applyTheme();
+          showToast("Тема: Жидкое стекло (Фото 1)");
+        };
+        document.getElementById("btnThemePixel").onclick = () => {
+          triggerHaptic("medium"); prefs.theme = "pixel"; applyTheme();
+          showToast("Тема: Google Pixel (Фото 2)");
+        };
+        document.getElementById("toggleDarkMode").onchange = (e) => {
+          triggerHaptic("light"); prefs.darkMode = e.target.checked; applyTheme();
+        };
+
+        // Импорт файлов
+        const audioInp = document.getElementById("audioFileInput");
+        document.getElementById("btnLibImport").onclick = () => audioInp.click();
+        audioInp.onchange = (e) => {
+          if (e.target.files.length) { importAudioFiles(e.target.files); e.target.value = ""; }
+        };
+
+        // Drag & drop
+        const dragOver = document.getElementById("dragOverlay");
+        window.addEventListener("dragenter", (e) => { e.preventDefault(); dragOver.classList.add("active"); });
+        window.addEventListener("dragleave", (e) => { e.preventDefault(); dragOver.classList.remove("active"); });
+        window.addEventListener("dragover", (e) => e.preventDefault());
+        window.addEventListener("drop", (e) => {
+          e.preventDefault(); dragOver.classList.remove("active");
+          if (e.dataTransfer && e.dataTransfer.files.length) importAudioFiles(e.dataTransfer.files);
+        });
+
+        // Таймер сна
+        document.getElementById("sleepPills").onclick = (e) => {
+          const c = e.target.closest("[data-sleep-mode]");
+          if (c) {
+            const m = c.dataset.sleepMode === "track" ? "track" : Number(c.dataset.sleepMode);
+            setSleepTimer(m);
+          }
+        };
+
+        // Поиск
+        const sInp = document.getElementById("searchInput");
+        sInp.oninput = () => {
+          const q = sInp.value.trim().toLowerCase();
+          const list = q ? state.tracks.filter((t) => t.title.toLowerCase().includes(q) || t.artist.toLowerCase().includes(q)) : [];
+          const box = document.getElementById("searchResultsList");
+          if (!list.length) {
+            box.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted);">Ничего не найдено</div>`;
+          } else {
+            box.innerHTML = list.map((t) => `
+              <div class="track-row" data-track-id="${t.id}">
+                <img class="track-thumb" src="${t.coverDataUrl}" alt="" />
+                <div class="track-info-col"><div class="track-name-lbl">${escapeHtml(t.title)}</div><div class="track-sub-lbl">${escapeHtml(t.artist)}</div></div>
+              </div>
+            `).join("");
+          }
+        };
+
+        // Делегирование кликов по трекам
+        document.body.addEventListener("click", (e) => {
+          const row = e.target.closest("[data-track-id]");
+          if (row && !e.target.closest("[data-more-track]")) {
+            closeSheet("librarySheet");
+            closeSheet("searchSheet");
+            playTrackById(row.dataset.trackId, true, false);
+            return;
+          }
+          const more = e.target.closest("[data-more-track]");
+          if (more) {
+            state.contextTrackId = more.dataset.moreTrack;
+            const tr = state.tracks.find((t) => t.id === state.contextTrackId);
+            document.getElementById("actionTrackTitle").textContent = tr ? tr.title : "Трек";
+            openSheet("trackActionsSheet");
+            return;
+          }
+          const closeBtn = e.target.closest("[data-close-sheet]");
+          if (closeBtn) closeSheet(closeBtn.dataset.closeSheet);
+        });
+
+        // Закрытие шторок по фону
+        document.querySelectorAll(".sheet-backdrop").forEach((b) => {
+          b.onclick = (e) => { if (e.target === b) closeSheet(b.id); };
+        });
+
+        // Действия трека
+        document.getElementById("actPlayNext").onclick = () => {
+          closeSheet("trackActionsSheet");
+          if (state.contextTrackId) {
+            state.upNextQueue.unshift(state.contextTrackId);
+            showToast("Добавлено следующим в очередь");
+          }
+        };
+        document.getElementById("actAutoTags").onclick = () => {
+          closeSheet("trackActionsSheet");
+          if (state.contextTrackId) autoSearchOnline(state.contextTrackId);
+        };
+        document.getElementById("actDelete").onclick = async () => {
+          const id = state.contextTrackId;
+          closeSheet("trackActionsSheet");
+          if (!id) return;
+          if (confirm("Удалить трек из медиатеки?")) {
+            await db.deleteTrack(id);
+            state.tracks = state.tracks.filter((t) => t.id !== id);
+            prefs.favorites = prefs.favorites.filter((x) => x !== id);
+            savePrefs();
+            if (state.currentTrackId === id) {
+              activeDeck.pause();
+              state.currentTrackId = state.tracks[0]?.id || null;
+              if (state.currentTrackId) playTrackById(state.currentTrackId, false);
+            }
+            showToast("Трек удален");
+          }
+        };
+
+        document.getElementById("btnAutoFetchLyrics").onclick = () => {
+          if (state.currentTrackId) autoSearchOnline(state.currentTrackId);
+        };
+        document.getElementById("btnOpenSettingsFromLib").onclick = () => {
+          closeSheet("librarySheet");
+          document.getElementById("statMins").textContent = Math.floor((prefs.totalListenSec || 0) / 60);
+          document.getElementById("statPlays").textContent = Object.values(prefs.playCounts || {}).reduce((a, b) => a + b, 0);
+          openSheet("settingsSheet");
+        };
+
+        // Бэкап
+        document.getElementById("btnExportBackup").onclick = () => {
+          const data = JSON.stringify({ prefs }, null, 2);
+          const f = new File([data], "Lumi-Backup.json", { type: "application/json" });
+          const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = "Lumi-Backup.json"; a.click();
+        };
+        const bInput = document.getElementById("backupRestoreInput");
+        document.getElementById("btnImportBackup").onclick = () => bInput.click();
+        bInput.onchange = async (e) => {
+          if (!e.target.files[0]) return;
+          try {
+            const parsed = JSON.parse(await e.target.files[0].text());
+            if (parsed && parsed.prefs) {
+              prefs = { ...defaultPrefs, ...parsed.prefs };
+              if (prefs.theme !== "glass" && prefs.theme !== "pixel") prefs.theme = "glass";
+              savePrefs();
+              applyTheme();
+              showToast("Копия восстановлена!");
+            }
+          } catch { showToast("Ошибка чтения файла"); }
+        };
+      }
+
+      /* ==================== 13. ИНИЦИАЛИЗАЦИЯ ==================== */
+      async function init() {
+        applyTheme();
+        bindEvents();
+        try {
+          const all = await db.getAllMeta();
+          all.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0));
+          state.tracks = all;
+          if (state.tracks.length > 0) {
+            await playTrackById(state.tracks[0].id, false);
+          } else {
+            const fallback = generateFallbackCover("Lumi");
+            document.getElementById("imgCoverCenter").src = fallback.dataUrl;
+            document.getElementById("pillAvatar").src = fallback.dataUrl;
+          }
+        } catch {}
+      }
+      init();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "appId": "com.theveloper.pixelplayer",
+  "appName": "Pixel Player",
+  "webDir": "www",
+  "backgroundColor": "#07070a",
+  "ios": {
+    "contentInset": "never",
+    "allowsLinkPreview": false,
+    "scrollEnabled": false
+  }
+}
